@@ -73,24 +73,16 @@
     }
 
     #interactive-map-container { 
-        display: none; width: 100%; max-height: 35vh; margin-bottom: 2vh; 
+        display: none; width: 100%; height: 42vh; max-height: 400px; margin-bottom: 2vh; 
         border: 4px solid var(--pbs-yellow); border-radius: 5px; 
-        background-color: #000;
-        padding: 4px;
-        box-sizing: border-box;
-        display: none;
-        align-items: center;
-        justify-content: center;
+        background-image: url('image_84b220.jpg');
+        background-color: #0d1b2a;
+        background-size: contain; 
+        background-position: center; 
+        background-repeat: no-repeat;
     }
-
-    #interactive-map-container img {
-        width: 100%;
-        height: auto;
-        max-height: 32vh;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-    }
+    #clue-board.map-active { min-height: 62vh; }
+    #clue-board.map-active .clue-text { min-height: 3vh; margin-bottom: 1vh; }
 
     .clue-text { 
         font-family: 'Roboto Mono', monospace; font-size: clamp(1rem, 2vw, 1.6rem); color: var(--neon-green); 
@@ -143,16 +135,16 @@
     
     @keyframes walk-across { 0% { left: -180px; } 100% { left: 100%; } }
     
-    .body-group { animation: body-bob 0.4s infinite alternate ease-in-out; }
-    @keyframes body-bob { 0% { transform: translateY(0px); } 100% { transform: translateY(6px); } }
+    .body-group { animation: body-bob 0.35s infinite alternate ease-in-out; transform-origin: 50% 100%; }
+    @keyframes body-bob { 0% { transform: translateY(2px) rotate(-2deg); } 100% { transform: translateY(-7px) rotate(2deg); } }
     
-    .leg-back { transform-origin: 50% 15%; animation: walk-cycle-b 0.4s infinite alternate ease-in-out; }
-    .leg-front { transform-origin: 50% 15%; animation: walk-cycle-f 0.4s infinite alternate ease-in-out; }
-    .arm-back { transform-origin: 50% 15%; animation: walk-cycle-f 0.4s infinite alternate ease-in-out; }
-    .arm-front { transform-origin: 50% 15%; animation: walk-cycle-b 0.4s infinite alternate ease-in-out; }
+    .leg-back { transform-origin: 50% 10%; animation: walk-cycle-b 0.35s infinite alternate ease-in-out; }
+    .leg-front { transform-origin: 50% 10%; animation: walk-cycle-f 0.35s infinite alternate ease-in-out; }
+    .arm-back { transform-origin: 50% 10%; animation: walk-cycle-f 0.35s infinite alternate ease-in-out; }
+    .arm-front { transform-origin: 50% 10%; animation: walk-cycle-b 0.35s infinite alternate ease-in-out; }
     
-    @keyframes walk-cycle-f { from { transform: rotate(-25deg); } to { transform: rotate(25deg); } }
-    @keyframes walk-cycle-b { from { transform: rotate(25deg); } to { transform: rotate(-25deg); } }
+    @keyframes walk-cycle-f { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
+    @keyframes walk-cycle-b { from { transform: rotate(24deg); } to { transform: rotate(-24deg); } }
 
     #cutscene-text { color: var(--pbs-yellow); font-size: clamp(0.9rem, 1.8vw, 1.3rem); margin-top: 3vh; max-width: 80vw; text-align: center; font-family: 'Roboto Mono', monospace; font-weight: bold; background: rgba(0,0,0,0.85); padding: 2vh; border-radius: 8px; border: 2px solid var(--podium-gray); }
 </style>
@@ -178,14 +170,14 @@
         <div class="form-group"><label>Name:</label><input type="text" id="playerName" placeholder="Enter Name" maxlength="10"></div>
         <div class="form-group">
             <label>Avatar:</label>
-            <select id="playerAvatar">
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&style=circle&top=shortHairShortFlat&hairColor=2c1b18&clothes=collarAndSweater&clothesColor=3c4f76&eyes=default&eyebrows=default&mouth=default">Teen Boy (Brown Hair)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Jake&style=circle&top=shortHairShortWaved&hairColor=d6b370&clothes=blazerAndShirt&clothesColor=262626&eyes=default&eyebrows=default&mouth=default">Teen Boy (Blonde)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Noah&style=circle&top=shortHairSides&hairColor=2c1b18&clothes=collarAndSweater&clothesColor=2b6cb0&eyes=default&eyebrows=default&mouth=default">Teen Boy (Black Hair)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Mia&style=circle&top=longHairStraight&hairColor=2c1b18&clothes=collarAndSweater&clothesColor=923159&eyes=default&eyebrows=default&mouth=default">Teen Girl (Brown Hair)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Chloe&style=circle&top=longHairCurvy&hairColor=d6b370&clothes=blazerAndShirt&clothesColor=3c4f76&eyes=default&eyebrows=default&mouth=default">Teen Girl (Blonde)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Zoe&style=circle&top=longHairStraightStrand&hairColor=2c1b18&clothes=collarAndSweater&clothesColor=2b6cb0&eyes=default&eyebrows=default&mouth=default">Teen Girl (Black Hair)</option>
-                <option value="https://api.dicebear.com/7.x/avataaars/svg?seed=Ruby&style=circle&top=longHairNotTooLong&hairColor=a55728&clothes=blazerAndShirt&clothesColor=506738&eyes=default&eyebrows=default&mouth=default">Teen Girl (Red Hair)</option>
+                <select id="playerAvatar">
+                <option data-gender="boy" data-hair="#3b2617" data-skin="#f1c27d">Boy (Brown Hair)</option>
+                <option data-gender="boy" data-hair="#d6b370" data-skin="#f1c27d">Boy (Blonde Hair)</option>
+                <option data-gender="boy" data-hair="#1c1c1c" data-skin="#c68642">Boy (Black Hair)</option>
+                <option data-gender="girl" data-hair="#3b2617" data-skin="#f1c27d">Girl (Brown Hair)</option>
+                <option data-gender="girl" data-hair="#d6b370" data-skin="#f1c27d">Girl (Blonde Hair)</option>
+                <option data-gender="girl" data-hair="#1c1c1c" data-skin="#c68642">Girl (Black Hair)</option>
+                <option data-gender="girl" data-hair="#a55728" data-skin="#f1c27d">Girl (Red Hair)</option>
             </select>
         </div>
         <button class="btn" onclick="initGame()" style="margin-top: 4vh; font-size: 1.5rem;">COMMENCE THE CHASE</button>
@@ -196,9 +188,7 @@
         <div id="round-info">ROUND <span id="r-num" style="color:white;">1</span>/5 <br> CLUE <span id="q-num" style="color:white;">1</span>/5</div>
         <div id="stage-top">
             <div id="clue-board">
-                <div id="interactive-map-container">
-                    <img src="image_84b220.jpg" alt="Map of Canada">
-                </div>
+                <div id="interactive-map-container"></div>
                 <div id="clue-display" class="clue-text">Awaiting transmission...</div>
                 <div id="options-container"></div>
             </div>
@@ -206,7 +196,7 @@
         
         <div id="podiums-container">
             <div class="podium">
-                <div class="contestant-avatar" style="background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Lily&style=circle&hair=longHairStraight&hairColor=a55728');"></div>
+                <div class="contestant-avatar" id="avatar-lori"></div>
                 <div class="podium-desk"><div class="name-plate">LORI</div><div class="score-display" id="score-bot1">000</div></div>
             </div>
             <div class="podium">
@@ -214,8 +204,7 @@
                 <div class="podium-desk"><div class="name-plate" id="display-playerName">YOU</div><div class="score-display" id="score-player">000</div></div>
             </div>
             <div class="podium">
-                <!-- Chris updated to a clear boy avatar seed -->
-                <div class="contestant-avatar" style="background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&style=circle&top=shortHairShortFlat&hairColor=2c1b18&clothes=collarAndSweater&clothesColor=3c4f76');"></div>
+                <div class="contestant-avatar" id="avatar-chris"></div>
                 <div class="podium-desk"><div class="name-plate">CHRIS</div><div class="score-display" id="score-bot2">000</div></div>
             </div>
         </div>
@@ -226,18 +215,44 @@
         <h2 style="color:var(--pbs-yellow); font-size: clamp(1.3rem, 2.5vw, 2.2rem); text-shadow: 2px 2px #000; margin-bottom: 1.5vh;">SIGHTING CONFIRMED...</h2>
         <div id="bg-photo">
             <div class="coomer-sprite">
+                <!-- Adjusted viewBox and proportions to eliminate top clipping -->
                 <svg viewBox="0 0 200 380" width="100%" height="100%">
                     <g class="body-group">
-                        <g class="arm-back"><path d="M 90 130 L 70 210" stroke="#87cefa" stroke-width="20" stroke-linecap="round"/><circle cx="70" cy="210" r="11" fill="#f1c27d"/></g>
-                        <g class="leg-back"><path d="M 90 230 L 80 345" stroke="#d8c3a5" stroke-width="26" stroke-linecap="round"/><ellipse cx="75" cy="355" rx="18" ry="11" fill="#3e2723"/></g>
-                        <g class="leg-front"><path d="M 110 230 L 120 345" stroke="#d8c3a5" stroke-width="26" stroke-linecap="round"/><ellipse cx="125" cy="355" rx="18" ry="11" fill="#3e2723"/></g>
-                        <path d="M 75 120 L 125 120 L 130 250 L 70 250 Z" fill="#add8e6"/>
-                        <line x1="100" y1="120" x2="100" y2="250" stroke="#ffffff" stroke-width="4"/> 
-                        <rect x="70" y="245" width="60" height="12" fill="#4a3b32" rx="2"/><rect x="92" y="243" width="16" height="16" fill="gold" rx="2"/>
-                        <rect x="90" y="90" width="20" height="35" fill="#f1c27d"/><circle cx="100" cy="75" r="30" fill="#f1c27d"/><circle cx="77" cy="80" r="7" fill="#e0b06a"/>
-                        <path d="M 70 85 Q 100 135 130 85 Q 100 105 70 85 Z" fill="#808080"/><path d="M 75 90 Q 100 125 125 90 Z" fill="#696969"/>
-                        <line x1="75" y1="70" x2="125" y2="70" stroke="#333" stroke-width="2"/><rect x="115" y="65" width="15" height="10" fill="none" stroke="#333" stroke-width="2"/><circle cx="122" cy="70" r="3" fill="#000"/>
-                        <g class="arm-front"><path d="M 110 130 L 140 190 L 125 225" stroke="#add8e6" stroke-width="20" stroke-linejoin="round" stroke-linecap="round" fill="none"/><circle cx="125" cy="225" r="11" fill="#f1c27d"/><rect x="105" y="210" width="35" height="42" fill="#5c2e16" rx="4" transform="rotate(-20 120 225)"/><text x="110" y="230" font-family="Arial" font-size="7" fill="gold" font-weight="bold" transform="rotate(-20 120 225)">BIBLE</text></g>
+                        <g class="arm-back"><path d="M 88 128 L 68 205" stroke="#5dade2" stroke-width="22" stroke-linecap="round"/><circle cx="68" cy="207" r="12" fill="#f1c27d"/></g>
+                        <g class="leg-back"><path d="M 90 228 L 80 342" stroke="#5b6b7a" stroke-width="28" stroke-linecap="round"/><ellipse cx="76" cy="354" rx="19" ry="10" fill="#3e2723"/></g>
+                        <g class="leg-front"><path d="M 110 228 L 120 342" stroke="#66788a" stroke-width="28" stroke-linecap="round"/><ellipse cx="124" cy="354" rx="19" ry="10" fill="#3e2723"/></g>
+
+                        <path d="M 72 118 Q 100 108 128 118 L 133 248 Q 100 258 67 248 Z" fill="#5dade2" stroke="#3d7bb5" stroke-width="2"/>
+                        <line x1="100" y1="122" x2="100" y2="248" stroke="#ffffff" stroke-width="4"/>
+                        <circle cx="100" cy="150" r="2.5" fill="#3d7bb5"/><circle cx="100" cy="175" r="2.5" fill="#3d7bb5"/><circle cx="100" cy="200" r="2.5" fill="#3d7bb5"/>
+                        <path d="M 84 118 L 100 135 L 90 122 Z" fill="#eef3f8"/>
+                        <path d="M 116 118 L 100 135 L 110 122 Z" fill="#eef3f8"/>
+                        <path d="M 96 122 L 104 122 L 108 145 L 100 160 L 92 145 Z" fill="#c53030"/>
+                        <rect x="68" y="243" width="64" height="11" fill="#4a3b32" rx="2"/><rect x="92" y="241" width="16" height="15" fill="gold" rx="2"/>
+
+                        <rect x="90" y="92" width="20" height="30" fill="#f1c27d"/>
+                        <circle cx="70" cy="80" r="7" fill="#f1c27d"/><circle cx="130" cy="80" r="7" fill="#f1c27d"/>
+                        <circle cx="100" cy="76" r="32" fill="#f1c27d"/>
+                        <circle cx="80" cy="88" r="6" fill="#f4a89a" opacity="0.6"/><circle cx="120" cy="88" r="6" fill="#f4a89a" opacity="0.6"/>
+                        <path d="M 68 62 Q 70 32 100 30 Q 130 32 132 62 Q 120 46 100 46 Q 80 46 68 62 Z" fill="#6b4a34"/>
+                        <path d="M 79 60 Q 87 55 95 59" stroke="#4a3527" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <path d="M 105 59 Q 113 55 121 60" stroke="#4a3527" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <circle cx="87" cy="72" r="12" fill="rgba(255,255,255,0.15)" stroke="#333" stroke-width="3"/>
+                        <circle cx="113" cy="72" r="12" fill="rgba(255,255,255,0.15)" stroke="#333" stroke-width="3"/>
+                        <line x1="99" y1="72" x2="101" y2="72" stroke="#333" stroke-width="3"/>
+                        <line x1="75" y1="70" x2="68" y2="66" stroke="#333" stroke-width="3"/>
+                        <line x1="125" y1="70" x2="132" y2="66" stroke="#333" stroke-width="3"/>
+                        <circle cx="87" cy="72" r="4" fill="#2d2d2d"/><circle cx="113" cy="72" r="4" fill="#2d2d2d"/>
+                        <path d="M 100 78 Q 103 84 99 87" stroke="#c68a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <path d="M 86 94 Q 100 104 114 94" stroke="#8a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                        <g class="arm-front">
+                            <path d="M 112 128 L 142 185 L 126 222" stroke="#5dade2" stroke-width="22" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+                            <circle cx="126" cy="222" r="12" fill="#f1c27d"/>
+                            <rect x="104" y="206" width="38" height="44" fill="#5c2e16" rx="4" transform="rotate(-18 123 228)"/>
+                            <line x1="104" y1="228" x2="142" y2="228" stroke="#3e2010" stroke-width="2" transform="rotate(-18 123 228)"/>
+                            <text x="108" y="232" font-family="Arial" font-size="8" fill="gold" font-weight="bold" transform="rotate(-18 123 228)">BIBLE</text>
+                        </g>
                     </g>
                 </svg>
             </div>
@@ -257,6 +272,41 @@
 <script>
     let audioCtx;
     const themeAudio = document.getElementById('theme-audio');
+
+    // Self-contained cartoon avatars (no external image service, always renders,
+    // and gender is drawn explicitly rather than left to a randomized API param).
+    function buildAvatarSVG(gender, hairColor, skinColor) {
+        const skin = skinColor || '#f1c27d';
+        const shirtColor = gender === 'boy' ? '#4a90d2' : '#d53f8c';
+        const backHair = gender === 'girl'
+            ? `<path d="M18 108 Q12 40 75 28 Q138 40 132 108 Q130 62 75 58 Q20 62 18 108 Z" fill="${hairColor}"/>`
+            : '';
+        const topHair = gender === 'boy'
+            ? `<path d="M33 55 Q75 12 117 55 Q118 38 100 30 Q75 18 50 30 Q32 38 33 55 Z" fill="${hairColor}"/>`
+            : `<path d="M22 55 Q75 8 128 55 Q108 34 75 32 Q42 34 22 55 Z" fill="${hairColor}"/>
+               <path d="M28 58 Q24 108 38 122 Q32 90 38 62 Z" fill="${hairColor}"/>
+               <path d="M122 58 Q126 108 112 122 Q118 90 112 62 Z" fill="${hairColor}"/>`;
+        const extras = gender === 'girl' ? `<path d="M75 96 L70 106 L80 106 Z" fill="#d53f8c"/>` : '';
+
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+            <rect width="150" height="150" fill="#e7edf3"/>
+            <path d="M0 150 Q75 96 150 150 L150 150 L0 150 Z" fill="${shirtColor}"/>
+            ${backHair}
+            <circle cx="75" cy="70" r="40" fill="${skin}"/>
+            ${topHair}
+            <circle cx="60" cy="72" r="5" fill="#2d2d2d"/><circle cx="90" cy="72" r="5" fill="#2d2d2d"/>
+            <path d="M60 92 Q75 102 90 92" stroke="#8a4a35" stroke-width="3" fill="none" stroke-linecap="round"/>
+            ${extras}
+        </svg>`;
+    }
+
+    function avatarDataUri(gender, hairColor, skinColor) {
+        return `data:image/svg+xml,${encodeURIComponent(buildAvatarSVG(gender, hairColor, skinColor))}`;
+    }
+
+    // Paint the two bot avatars locally on load (no network dependency).
+    document.getElementById('avatar-lori').style.backgroundImage = `url("${avatarDataUri('girl', '#a55728', '#f1c27d')}")`;
+    document.getElementById('avatar-chris').style.backgroundImage = `url("${avatarDataUri('boy', '#3b2617', '#f1c27d')}")`;
 
     function initAudio() {
         if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -378,7 +428,13 @@
     function initGame() {
         const nameInput = document.getElementById('playerName').value || 'GUMSHOE';
         document.getElementById('display-playerName').innerText = nameInput.toUpperCase().substring(0,8);
-        document.getElementById('player-avatar').style.backgroundImage = `url('${document.getElementById('playerAvatar').value}')`;
+
+        const avatarSelect = document.getElementById('playerAvatar');
+        const chosen = avatarSelect.options[avatarSelect.selectedIndex];
+        const gender = chosen.dataset.gender;
+        const hairColor = chosen.dataset.hair;
+        const skinColor = chosen.dataset.skin;
+        document.getElementById('player-avatar').style.backgroundImage = `url("${avatarDataUri(gender, hairColor, skinColor)}")`;
         
         scores = { player: 0, bot1: 0, bot2: 0 };
         currentQ = 0;
@@ -412,10 +468,13 @@
         optsContainer.innerHTML = "";
         optsContainer.style.display = 'none';
 
+        const clueBoard = document.getElementById('clue-board');
         if(qData.isMap) {
-            mapContainer.style.display = 'flex';
+            mapContainer.style.display = 'block';
+            clueBoard.classList.add('map-active');
         } else {
             mapContainer.style.display = 'none';
+            clueBoard.classList.remove('map-active');
         }
 
         clueDisplay.style.opacity = 0;
