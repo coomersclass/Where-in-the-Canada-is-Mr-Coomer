@@ -513,6 +513,30 @@
     let botTimer = null;
     let gameActive = false;
 
+    // Array of specific locations and facts with precisely matched background photos for each transition
+    const cutsceneLocations = [
+        {
+            location: "Montreal, Quebec",
+            fact: "Did you know Montreal was originally founded as a missionary center called Ville-Marie in 1642? God's word has deep historical roots here!",
+            bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" // Montreal / Old Quebec architecture view
+        },
+        {
+            location: "Ottawa, Ontario",
+            fact: "Ottawa is Canada's capital! Queen Victoria chose it in 1857 because it was safely nestled away from the American border and protected by thick forests.",
+            bg: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1200&q=80" // Ottawa Parliament Hill / cityscape
+        },
+        {
+            location: "The Canadian Rockies, Alberta",
+            fact: "The Canadian Rockies perfectly display God's majestic creation. Mount Robson is the highest peak here, reaching over 12,900 feet into the sky!",
+            bg: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=1200&q=80" // Alpine mountains / Rockies landscape
+        },
+        {
+            location: "Vancouver, British Columbia",
+            fact: "Vancouver is Canada's busiest port. Early explorers marveled at this beautiful coast, reminding us of Psalm 95:5, 'The sea is His, for He made it.'",
+            bg: "https://images.unsplash.com/photo-1559511260-66a03446b0b6?auto=format&fit=crop&w=1200&q=80" // Vancouver harbor / skyline view
+        }
+    ];
+
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -546,7 +570,7 @@
         
         let shuffled = [...triviaData];
         shuffleArray(shuffled);
-        gameQuestions = shuffled.slice(0, 25); // Now pulls 25 questions total (5 rounds x 5 questions)
+        gameQuestions = shuffled.slice(0, 25); // Pulls 25 questions total (5 rounds x 5 questions)
 
         updateScoreBoard();
         themeAudio.pause(); 
@@ -566,7 +590,6 @@
         gameActive = true;
         const qData = gameQuestions[currentQ];
         
-        // Calculate and update round / question display
         const currentRound = Math.floor(currentQ / 5) + 1;
         const questionInRound = (currentQ % 5) + 1;
         
@@ -641,7 +664,7 @@
             clueDisplay.innerHTML = `<span style="color:var(--lcd-red)">INCORRECT, ${nameStr}!</span><br><span style="font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:white;">Answer: ${gameQuestions[currentQ].opts[correct]}</span>`;
             if (who === 'player') {
                 sfxWrong();
-                scores.player -= 1; // Player score goes down for incorrect answer!
+                scores.player -= 1;
             } else {
                 scores[who] += 1;
             }
@@ -650,7 +673,6 @@
         updateScoreBoard();
 
         if (currentQ < gameQuestions.length - 1) {
-            // Check if it is the end of a 5-question round
             if ((currentQ + 1) % 5 === 0) {
                 setTimeout(() => triggerTravelCutscene(), 2500);
             } else {
@@ -670,21 +692,27 @@
         const overlay = document.getElementById('cutscene-overlay');
         const photo = document.getElementById('bg-photo');
         
-        photo.style.backgroundImage = `url('${gameQuestions[currentQ].bg}')`;
-        document.getElementById('cutscene-text').innerText = "Look! It's Mr. Coomer, leaving the area! He's telling everyone about his 6th grade history test and sharing the Gospel before catching his next flight!";
+        const sceneIndex = Math.floor(currentQ / 5);
+        const sceneData = cutsceneLocations[sceneIndex] || cutsceneLocations[0];
+        
+        photo.style.backgroundImage = `url('${sceneData.bg}')`;
+        document.getElementById('cutscene-text').innerText = `Look! It's Mr. Coomer, leaving ${sceneData.location}! ${sceneData.fact} He's handing out math quizzes and sharing the Gospel before catching his next flight!`;
         
         const sprite = document.querySelector('.coomer-sprite');
         sprite.style.animation = 'none';
         void sprite.offsetWidth; 
-        sprite.style.animation = 'walk-across 5s linear forwards';
+        
+        // Extended walk-across animation to 10 seconds (+3 seconds total)
+        sprite.style.animation = 'walk-across 10s linear forwards';
         
         overlay.style.display = 'flex';
 
+        // Extended timeout display length to 10.5 seconds (+3 seconds total)
         setTimeout(() => {
             overlay.style.display = 'none';
             currentQ++;
             loadQuestion();
-        }, 5500);
+        }, 10500);
     }
 
     function endGame() {
@@ -698,7 +726,8 @@
         if (scores.player >= scores.bot1 && scores.player >= scores.bot2) {
             outroTitle.innerText = "MISSION ACCOMPLISHED!";
             outroTitle.style.color = "var(--neon-green)";
-            outroPhoto.style.display = 'none';
+            outroPhoto.style.display = 'block';
+            outroPhoto.style.backgroundImage = `url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80')`;
             outroText.innerHTML = `Incredible work, Gumshoe! You outsmarted Lori and Chris. You successfully intercepted Mr. Coomer just as he was grading a batch of math quizzes! He is now safely boarding a flight back to Tennessee. You've brought him home!`;
             sfxAudienceCheer(5); 
         } else {
