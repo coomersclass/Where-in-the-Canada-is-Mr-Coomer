@@ -127,7 +127,6 @@
         box-shadow: 0 0 50px rgba(0,0,0,0.9); border-radius: 10px; 
     }
     
-    /* Fixed Coomer Animation Container & Alignment */
     .coomer-sprite { 
         position: absolute; bottom: 0vh; width: 140px; height: 320px; 
         animation: walk-across 5s linear forwards; 
@@ -135,16 +134,19 @@
     
     @keyframes walk-across { 0% { left: -180px; } 100% { left: 100%; } }
     
-    .body-group { animation: body-bob 0.35s infinite alternate ease-in-out; transform-origin: 50% 100%; }
-    @keyframes body-bob { 0% { transform: translateY(2px) rotate(-2deg); } 100% { transform: translateY(-7px) rotate(2deg); } }
+    .body-group { animation: body-bob 0.42s infinite alternate cubic-bezier(0.45,0,0.55,1); transform-origin: 50% 100%; }
+    @keyframes body-bob { 0% { transform: translateY(3px) rotate(-2deg); } 100% { transform: translateY(-9px) rotate(2deg); } }
+
+    .ground-shadow { animation: shadow-pulse 0.42s infinite alternate cubic-bezier(0.45,0,0.55,1); transform-origin: 50% 50%; }
+    @keyframes shadow-pulse { 0% { transform: scaleX(1); opacity: 0.4; } 100% { transform: scaleX(0.78); opacity: 0.22; } }
     
-    .leg-back { transform-origin: 50% 10%; animation: walk-cycle-b 0.35s infinite alternate ease-in-out; }
-    .leg-front { transform-origin: 50% 10%; animation: walk-cycle-f 0.35s infinite alternate ease-in-out; }
-    .arm-back { transform-origin: 50% 10%; animation: walk-cycle-f 0.35s infinite alternate ease-in-out; }
-    .arm-front { transform-origin: 50% 10%; animation: walk-cycle-b 0.35s infinite alternate ease-in-out; }
+    .leg-back { transform-origin: 50% 8%; animation: walk-cycle-b 0.42s infinite alternate cubic-bezier(0.65,0,0.35,1); }
+    .leg-front { transform-origin: 50% 8%; animation: walk-cycle-f 0.42s infinite alternate cubic-bezier(0.65,0,0.35,1); }
+    .arm-back { transform-origin: 50% 8%; animation: walk-cycle-f 0.42s infinite alternate cubic-bezier(0.65,0,0.35,1); }
+    .arm-front { transform-origin: 50% 8%; animation: walk-cycle-b 0.42s infinite alternate cubic-bezier(0.65,0,0.35,1); }
     
-    @keyframes walk-cycle-f { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
-    @keyframes walk-cycle-b { from { transform: rotate(24deg); } to { transform: rotate(-24deg); } }
+    @keyframes walk-cycle-f { from { transform: rotate(-26deg); } to { transform: rotate(26deg); } }
+    @keyframes walk-cycle-b { from { transform: rotate(26deg); } to { transform: rotate(-26deg); } }
 
     #cutscene-text { color: var(--pbs-yellow); font-size: clamp(0.9rem, 1.8vw, 1.3rem); margin-top: 3vh; max-width: 80vw; text-align: center; font-family: 'Roboto Mono', monospace; font-weight: bold; background: rgba(0,0,0,0.85); padding: 2vh; border-radius: 8px; border: 2px solid var(--podium-gray); }
 </style>
@@ -215,8 +217,8 @@
         <h2 style="color:var(--pbs-yellow); font-size: clamp(1.3rem, 2.5vw, 2.2rem); text-shadow: 2px 2px #000; margin-bottom: 1.5vh;">SIGHTING CONFIRMED...</h2>
         <div id="bg-photo">
             <div class="coomer-sprite">
-                <!-- Adjusted viewBox and proportions to eliminate top clipping -->
                 <svg viewBox="0 0 200 380" width="100%" height="100%">
+                    <ellipse class="ground-shadow" cx="100" cy="365" rx="55" ry="12" fill="black" opacity="0.35"/>
                     <g class="body-group">
                         <g class="arm-back"><path d="M 88 128 L 68 205" stroke="#5dade2" stroke-width="22" stroke-linecap="round"/><circle cx="68" cy="207" r="12" fill="#f1c27d"/></g>
                         <g class="leg-back"><path d="M 90 228 L 80 342" stroke="#5b6b7a" stroke-width="28" stroke-linecap="round"/><ellipse cx="76" cy="354" rx="19" ry="10" fill="#3e2723"/></g>
@@ -233,10 +235,12 @@
                         <rect x="90" y="92" width="20" height="30" fill="#f1c27d"/>
                         <circle cx="70" cy="80" r="7" fill="#f1c27d"/><circle cx="130" cy="80" r="7" fill="#f1c27d"/>
                         <circle cx="100" cy="76" r="32" fill="#f1c27d"/>
-                        <circle cx="80" cy="88" r="6" fill="#f4a89a" opacity="0.6"/><circle cx="120" cy="88" r="6" fill="#f4a89a" opacity="0.6"/>
-                        <path d="M 68 62 Q 70 32 100 30 Q 130 32 132 62 Q 120 46 100 46 Q 80 46 68 62 Z" fill="#6b4a34"/>
-                        <path d="M 79 60 Q 87 55 95 59" stroke="#4a3527" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <path d="M 105 59 Q 113 55 121 60" stroke="#4a3527" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <path d="M 66 78 Q 61 56 72 44 Q 65 62 69 80 Z" fill="#b8b8b8"/>
+                        <path d="M 134 78 Q 139 56 128 44 Q 135 62 131 80 Z" fill="#b8b8b8"/>
+                        <ellipse cx="92" cy="54" rx="9" ry="5" fill="#ffffff" opacity="0.3"/>
+                        <path d="M 66 68 C 64 95, 68 118, 100 120 C 132 118, 136 95, 134 68 C 130 90, 118 98, 100 98 C 82 98, 70 90, 66 68 Z" fill="#cfcfcf"/>
+                        <path d="M 79 60 Q 87 55 95 59" stroke="#999999" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <path d="M 105 59 Q 113 55 121 60" stroke="#999999" stroke-width="3" fill="none" stroke-linecap="round"/>
                         <circle cx="87" cy="72" r="12" fill="rgba(255,255,255,0.15)" stroke="#333" stroke-width="3"/>
                         <circle cx="113" cy="72" r="12" fill="rgba(255,255,255,0.15)" stroke="#333" stroke-width="3"/>
                         <line x1="99" y1="72" x2="101" y2="72" stroke="#333" stroke-width="3"/>
@@ -244,7 +248,7 @@
                         <line x1="125" y1="70" x2="132" y2="66" stroke="#333" stroke-width="3"/>
                         <circle cx="87" cy="72" r="4" fill="#2d2d2d"/><circle cx="113" cy="72" r="4" fill="#2d2d2d"/>
                         <path d="M 100 78 Q 103 84 99 87" stroke="#c68a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                        <path d="M 86 94 Q 100 104 114 94" stroke="#8a4a3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <path d="M 86 94 Q 100 104 114 94" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
 
                         <g class="arm-front">
                             <path d="M 112 128 L 142 185 L 126 222" stroke="#5dade2" stroke-width="22" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
@@ -273,8 +277,6 @@
     let audioCtx;
     const themeAudio = document.getElementById('theme-audio');
 
-    // Self-contained cartoon avatars (no external image service, always renders,
-    // and gender is drawn explicitly rather than left to a randomized API param).
     function buildAvatarSVG(gender, hairColor, skinColor) {
         const skin = skinColor || '#f1c27d';
         const shirtColor = gender === 'boy' ? '#4a90d2' : '#d53f8c';
@@ -304,7 +306,6 @@
         return `data:image/svg+xml,${encodeURIComponent(buildAvatarSVG(gender, hairColor, skinColor))}`;
     }
 
-    // Paint the two bot avatars locally on load (no network dependency).
     document.getElementById('avatar-lori').style.backgroundImage = `url("${avatarDataUri('girl', '#a55728', '#f1c27d')}")`;
     document.getElementById('avatar-chris').style.backgroundImage = `url("${avatarDataUri('boy', '#3b2617', '#f1c27d')}")`;
 
@@ -324,7 +325,7 @@
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
         osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-        sfxAudienceCheer(1.5);
+        sfxApplause(2);
     }
     
     function sfxWrong() {
@@ -337,42 +338,91 @@
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
         osc.start(); osc.stop(audioCtx.currentTime + 0.8);
-        sfxAudienceGroan(1.5);
+        sfxGasp();
     }
 
-    function sfxAudienceCheer(duration = 2) {
+    function playClap(startTime, volume) {
+        const bufferSize = Math.floor(audioCtx.sampleRate * 0.05);
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+        }
+        const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1800 + Math.random() * 3000;
+        filter.Q.value = 0.9;
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(volume, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.09);
+        noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+        noise.start(startTime);
+    }
+
+    function sfxApplause(duration = 2) {
         if(!audioCtx) return;
-        const bufferSize = audioCtx.sampleRate * duration;
+        const now = audioCtx.currentTime;
+        const clapCount = Math.floor(duration * 55);
+        for (let i = 0; i < clapCount; i++) {
+            const progress = i / clapCount;
+            const envelope = Math.sin(Math.PI * Math.min(progress * 1.4, 1));
+            const t = now + Math.random() * duration;
+            playClap(t, 0.05 + envelope * (0.12 + Math.random() * 0.1));
+        }
+        const bedSize = Math.floor(audioCtx.sampleRate * duration);
+        const bedBuffer = audioCtx.createBuffer(1, bedSize, audioCtx.sampleRate);
+        const bedData = bedBuffer.getChannelData(0);
+        for (let i = 0; i < bedSize; i++) { bedData[i] = Math.random() * 2 - 1; }
+        const bedSrc = audioCtx.createBufferSource(); bedSrc.buffer = bedBuffer;
+        const bedFilter = audioCtx.createBiquadFilter(); bedFilter.type = 'bandpass'; bedFilter.frequency.value = 2200; bedFilter.Q.value = 0.6;
+        const bedGain = audioCtx.createGain();
+        bedGain.gain.setValueAtTime(0.0001, now);
+        bedGain.gain.linearRampToValueAtTime(0.08, now + duration * 0.25);
+        bedGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        bedSrc.connect(bedFilter); bedFilter.connect(bedGain); bedGain.connect(audioCtx.destination);
+        bedSrc.start(now);
+    }
+
+    function sfxGasp() {
+        if(!audioCtx) return;
+        const t = audioCtx.currentTime;
+
+        const bufferSize = Math.floor(audioCtx.sampleRate * 0.3);
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const data = buffer.getChannelData(0);
         for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
         const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
-        const filter = audioCtx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1200;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(500, t);
+        filter.frequency.exponentialRampToValueAtTime(3000, t + 0.15);
+        filter.Q.value = 1.8;
         const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.001, t);
+        gain.gain.exponentialRampToValueAtTime(0.45, t + 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
         noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-        gain.gain.setValueAtTime(0, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 0.2);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-        noise.start();
+        noise.start(t);
+
+        for (let i = 0; i < 6; i++) {
+            const startT = t + Math.random() * 0.04;
+            const osc = audioCtx.createOscillator();
+            const oGain = audioCtx.createGain();
+            osc.type = 'triangle';
+            const baseFreq = 170 + Math.random() * 130;
+            osc.frequency.setValueAtTime(baseFreq * 0.6, startT);
+            osc.frequency.exponentialRampToValueAtTime(baseFreq, startT + 0.09);
+            osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.75, startT + 0.28);
+            oGain.gain.setValueAtTime(0.0001, startT);
+            oGain.gain.exponentialRampToValueAtTime(0.04 + Math.random() * 0.05, startT + 0.07);
+            oGain.gain.exponentialRampToValueAtTime(0.0001, startT + 0.32);
+            osc.connect(oGain); oGain.connect(audioCtx.destination);
+            osc.start(startT); osc.stop(startT + 0.35);
+        }
     }
 
-    function sfxAudienceGroan(duration = 1.5) {
-        if(!audioCtx) return;
-        const bufferSize = audioCtx.sampleRate * duration;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
-        const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
-        const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 300;
-        const gain = audioCtx.createGain();
-        noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-        gain.gain.setValueAtTime(0, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.2);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-        noise.start();
-    }
-
-    // Complete Trivia & Real Photographic Backgrounds for Locations
+    // Complete Extended Question Bank covering all items from canada.pdf
     let triviaData = [
         { q: "The water route that supposedly flowed through North America to Asia", a: 0, opts: ["Northwest passageway", "Dempster highway", "St. Lawrence seaway", "Bay of Fundy"], bg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80" },
         { q: "The oldest business in Canada", a: 1, opts: ["Klondike Gold", "Hudson Bay Company", "New France Trade", "Loyalists Inc."], bg: "https://images.unsplash.com/photo-1578593139369-0260406cf6f2?auto=format&fit=crop&w=1200&q=80" },
@@ -384,23 +434,53 @@
         { q: "The polar bear capital of the world", a: 2, opts: ["Victoria", "Ottawa", "Churchhill", "Iqaluit"], bg: "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80" },
         { q: "One of the worlds largest inland port", a: 1, opts: ["Halifax", "Montreal", "Toronto", "St. John's"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
         { q: "Canada gateway to the Pacific", a: 0, opts: ["Vancouver", "Victoria", "Whitehorse", "Calgary"], bg: "https://images.unsplash.com/photo-1559511260-66a03446b0b6?auto=format&fit=crop&w=1200&q=80" },
-        
+        { q: "The capital of Canada", a: 1, opts: ["Toronto", "Ottawa", "Montreal", "Quebec City"], bg: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The largest city in Canada", a: 2, opts: ["Vancouver", "Montreal", "Toronto", "Ottawa"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The only walled city north of Mexico", a: 0, opts: ["Quebec city", "Halifax", "St. John's", "Victoria"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The body of water that has some of the world's highest tides", a: 1, opts: ["Hudson Bay", "Bay of Fundy", "St. Lawrence Seaway", "Baffin Bay"], bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada's longest river", a: 3, opts: ["Yukon River", "St. Lawrence River", "Fraser River", "Mackenzie river"], bg: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The largest freshwater lake in the world", a: 0, opts: ["Lake superior", "Lake Winnipeg", "Great Bear Lake", "Great Slave Lake"], bg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada's highest peak", a: 2, opts: ["Mountie Peak", "Rocky Mountain", "Mount Logan", "Whistler Peak"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
+        { q: "One of the world's most beautiful waterfalls found in both Canada and the United States", a: 1, opts: ["Victoria Falls", "Niagara Falls", "Montmorency Falls", "Athabasca Falls"], bg: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The world's largest bay", a: 0, opts: ["Hudson Bay", "Baffin Bay", "Davis Strait", "Bay of Fundy"], bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The world's largest inland sea way", a: 3, opts: ["Hudson Bay", "Bay of Fundy", "Mackenzie River", "St. Lawrence seaway"], bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The first modern explorer to reach the North American mainland", a: 0, opts: ["John Cabot", "Jacques Cartier", "Henry Hudson", "Samuel de Champlain"], bg: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Explorer who opened the way for trade between French and Indians", a: 1, opts: ["John Cabot", "Jacques Cartier", "James Evans", "Henry Alline"], bg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Explorer who helped establish the first important French settlement which is Quebec", a: 2, opts: ["Henry Hudson", "Jacques Cartier", "Samuel de Champlain", "Captain Cook"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The explorer who discovered the world's largest bay", a: 3, opts: ["John Cabot", "Samuel de Champlain", "Jacques Cartier", "Henry Hudson"], bg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canadian missionary to China who later wrote books telling of the missionary work", a: 0, opts: ["Isobel Kuhn", "Henry Alline", "James Evans", "Charles Best"], bg: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=1200&q=80" },
+        { q: "British explorers who mapped Canada's Pacific Coast", a: 1, opts: ["Cabot and Hudson", "Captain Cook and Captain Vancouver", "Cartier and Champlain", "Banting and Best"], bg: "https://images.unsplash.com/photo-1559511260-66a03446b0b6?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The 'apostle of Nova Scotia'", a: 2, opts: ["James Evans", "Isobel Kuhn", "Henry Alline", "John Cabot"], bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
+        { q: "One of the first pioneer missionaries to Manitoba Canada", a: 3, opts: ["Henry Hudson", "Samuel de Champlain", "Henry Alline", "James Evans"], bg: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The two Canadian researchers who discovered a treatment for diabetes", a: 0, opts: ["Frederick Banting and Charles Best", "Cook and Vancouver", "Cabot and Cartier", "Alline and Evans"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
+        { q: "The French settlers who refused to pledge their loyalty to the British crown", a: 1, opts: ["Loyalists", "Acadians", "Mounties", "Newfoundlanders"], bg: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80" },
+        { q: "American colonists who moved to Canada rather than fight against working in the war for Independence", a: 2, opts: ["Acadians", "French explorers", "Loyalists", "Missionaries"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
+        { q: "One of Canada's most important natural resources", a: 3, opts: ["Gold", "Diamonds", "Rubber", "Fish"], bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada is the largest world producer of these minerals", a: 0, opts: ["Nickel and zinc", "Gold and silver", "Iron and copper", "Lead and tin"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada leads the world in the production of this kind of paper", a: 1, opts: ["Cardboard", "Newsprint", "Stationery", "Kraft paper"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada is one of the largest leading exporters of this agricultural commodity", a: 2, opts: ["Corn", "Rice", "Wheat", "Barley"], bg: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada's government system", a: 3, opts: ["Absolute Monarchy", "Republic", "Direct Democracy", "Constitutional monarchy"], bg: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada's world-famous police force, the Royal Canadian Mounted Police", a: 0, opts: ["Mounties", "Redcoats", "Constables", "Northmen"], bg: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=1200&q=80" },
+        { q: "Canada's two official languages", a: 1, opts: ["English and Spanish", "French and English", "English and Native Cree", "French and German"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Alberta?", a: 2, opts: ["Calgary", "Victoria", "Edmonton", "Regina"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of British Columbia?", a: 0, opts: ["Victoria", "Vancouver", "Whitehorse", "Winnipeg"], bg: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Manitoba?", a: 3, opts: ["Regina", "Toronto", "Fredericton", "Winnipeg"], bg: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of New Brunswick?", a: 1, opts: ["Halifax", "Fredericton", "Charlottetown", "St. John's"], bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Newfoundland and Labrador?", a: 2, opts: ["Halifax", "Quebec City", "St. John's", "Victoria"], bg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Nova Scotia?", a: 1, opts: ["Charlottetown", "Halifax", "St. John's", "Iqaluit"], bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Northwest Territories?", a: 0, opts: ["Yellowknife", "Whitehorse", "Iqaluit", "Edmonton"], bg: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Nunavut?", a: 3, opts: ["Yellowknife", "Regina", "Victoria", "Iqaluit"], bg: "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Ontario?", a: 0, opts: ["Toronto", "Ottawa", "Quebec City", "Edmonton"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Prince Edward Island?", a: 1, opts: ["Halifax", "Charlottetown", "Fredericton", "St. John's"], bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Quebec?", a: 2, opts: ["Montreal", "Toronto", "Quebec City", "Ottawa"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Saskatchewan?", a: 0, opts: ["Regina", "Winnipeg", "Calgary", "Edmonton"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What is the capital of Yukon Territory?", a: 3, opts: ["Yellowknife", "Iqaluit", "Victoria", "Whitehorse"], bg: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80" },
+        { q: "What city is famous for its 10-day rodeo held every July?", a: 1, opts: ["Edmonton", "Calgary", "Vancouver", "Winnipeg"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
         { q: "Identify British Columbia by its map letter.", a: 0, opts: ["Letter L", "Letter C", "Letter Q", "Letter O"], isMap: true, bg: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=1200&q=80" },
         { q: "Identify Alberta by its map letter.", a: 1, opts: ["Letter L", "Letter C", "Letter T", "Letter R"], isMap: true, bg: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80" },
         { q: "Identify Ontario by its map letter.", a: 2, opts: ["Letter P", "Letter M", "Letter Q", "Letter E"], isMap: true, bg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" },
         { q: "Identify Nova Scotia by its map letter.", a: 3, opts: ["Letter M", "Letter E", "Letter P", "Letter R"], isMap: true, bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
-        { q: "Identify Hudson Bay by its map letter.", a: 0, opts: ["Letter O", "Letter D", "Letter E", "Letter F"], isMap: true, bg: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" },
-        
-        { q: "The capital of Canada", a: 1, opts: ["Toronto", "Ottawa", "Montreal", "Quebec City"], bg: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80" },
-        { q: "The largest city in Canada", a: 2, opts: ["Vancouver", "Montreal", "Toronto", "Ottawa"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" },
-        { q: "The only walled city north of Mexico", a: 0, opts: ["Quebec city", "Halifax", "St. John's", "Victoria"], bg: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80" },
-        { q: "Canada's longest river", a: 3, opts: ["Yukon River", "St. Lawrence River", "Fraser River", "McKenzie river"], bg: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=80" },
-        { q: "The world's largest inland sea way", a: 1, opts: ["Hudson Bay", "St. Lawrence seaway", "Lake Superior", "Bay of Fundy"], bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
-        { q: "What is the capital of Alberta?", a: 2, opts: ["Calgary", "Victoria", "Edmonton", "Regina"], bg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" },
-        { q: "What is the capital of British Columbia?", a: 0, opts: ["Victoria", "Vancouver", "Whitehorse", "Winnipeg"], bg: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=1200&q=80" },
-        { q: "What is the capital of Manitoba?", a: 3, opts: ["Regina", "Toronto", "Fredericton", "Winnipeg"], bg: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80" },
-        { q: "What is the capital of Nova Scotia?", a: 1, opts: ["Charlottetown", "Halifax", "St. John's", "Iqaluit"], bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" },
-        { q: "What is the capital of Ontario?", a: 0, opts: ["Toronto", "Ottawa", "Quebec City", "Edmonton"], bg: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80" }
+        { q: "Identify Hudson Bay by its map letter.", a: 0, opts: ["Letter O", "Letter D", "Letter E", "Letter F"], isMap: true, bg: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" }
     ];
 
     let currentQ = 0;
@@ -447,9 +527,15 @@
     }
 
     function updateScoreBoard() {
-        document.getElementById('score-player').innerText = (scores.player * 10).toString().padStart(3, '0');
-        document.getElementById('score-bot1').innerText = (scores.bot1 * 10).toString().padStart(3, '0');
-        document.getElementById('score-bot2').innerText = (scores.bot2 * 10).toString().padStart(3, '0');
+        // Format scores supporting negative values cleanly
+        const formatScore = (val) => {
+            const prefix = val < 0 ? '-' : '';
+            const absStr = Math.abs(val).toString().padStart(3, '0');
+            return prefix + absStr;
+        };
+        document.getElementById('score-player').innerText = formatScore(scores.player);
+        document.getElementById('score-bot1').innerText = formatScore(scores.bot1);
+        document.getElementById('score-bot2').innerText = formatScore(scores.bot2);
     }
 
     function loadQuestion() {
@@ -521,21 +607,26 @@
 
         let nameStr = who === 'player' ? "YOU" : (who === 'bot1' ? "LORI" : "CHRIS");
 
+        // Calculate increasing point values per round (Round 1 = 10 pts, Round 2 = 20 pts, etc.)
+        const currentRound = Math.floor(currentQ / 5) + 1;
+        const pointValue = currentRound * 10;
+
         if (guess === correct) {
-            scores[who] += 1;
-            clueDisplay.innerHTML = `<span style="color:var(--neon-green)">CORRECT, ${nameStr}!</span>`;
+            scores[who] += pointValue;
+            clueDisplay.innerHTML = `<span style="color:var(--neon-green)">CORRECT, ${nameStr}! (+${pointValue} PTS)</span>`;
             if (who === 'player') sfxCorrect();
         } else {
-            clueDisplay.innerHTML = `<span style="color:var(--lcd-red)">INCORRECT, ${nameStr}!</span><br><span style="font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:white;">Answer: ${triviaData[currentQ].opts[correct]}</span>`;
+            scores[who] -= pointValue; // Apply negative points for incorrect answers
+            clueDisplay.innerHTML = `<span style="color:var(--lcd-red)">INCORRECT, ${nameStr}! (-${pointValue} PTS)</span><br><span style="font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:white;">Answer: ${triviaData[currentQ].opts[correct]}</span>`;
             if (who === 'player') {
                 sfxWrong();
-                scores[Math.random() > 0.5 ? 'bot1' : 'bot2'] += 1;
+                scores[Math.random() > 0.5 ? 'bot1' : 'bot2'] += pointValue;
             }
         }
         
         updateScoreBoard();
 
-        if (currentQ % 5 === 4 && currentQ !== 24) {
+        if (currentQ % 5 === 4 && currentQ !== triviaData.length - 1) {
             setTimeout(() => triggerTravelCutscene(), 2500);
         } else {
             setTimeout(() => {
@@ -576,7 +667,7 @@
         if (scores.player >= scores.bot1 && scores.player >= scores.bot2) {
             outroTitle.innerText = "MISSION ACCOMPLISHED!";
             outroText.innerHTML = `Incredible work, Gumshoe! You outsmarted Lori and Chris. You successfully intercepted Mr. Coomer just as he was grading a batch of math quizzes! He is now safely boarding a flight back to Tennessee. You've brought him home!`;
-            sfxAudienceCheer(5); 
+            sfxApplause(4.5); 
         } else {
             outroTitle.innerText = "MISSION FAILED...";
             outroTitle.style.color = "var(--lcd-red)";
