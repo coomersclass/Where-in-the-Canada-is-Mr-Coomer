@@ -117,6 +117,20 @@
     .name-plate { background: #fff; color: #000; font-family: 'Roboto Mono', monospace; font-size: clamp(1rem, 1.5vw, 1.6rem); padding: 0.5vh 1vw; border: 3px solid var(--neon-pink); margin-bottom: 1vh; font-weight: bold; }
     .score-display { background: #000; color: var(--lcd-red); font-family: 'Press Start 2P', cursive; font-size: clamp(1.2rem, 2vw, 2.2rem); padding: 1vh 2vw; border: 4px solid #1a202c; text-shadow: 0 0 10px var(--lcd-red); }
 
+    /* Corner Flags for Intro Screen */
+    .corner-flag {
+        position: absolute;
+        width: 80px;
+        height: 40px;
+        border: 3px solid var(--pbs-yellow);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+        z-index: 5;
+    }
+    .flag-tl { top: 3vh; left: 3vw; transform: rotate(-6deg); }
+    .flag-tr { top: 3vh; right: 3vw; transform: rotate(6deg); }
+    .flag-bl { bottom: 3vh; left: 3vw; transform: rotate(6deg); }
+    .flag-br { bottom: 3vh; right: 3vw; transform: rotate(-6deg); }
+
     /* Cutscene Overlay */
     #cutscene-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; }
     
@@ -157,6 +171,36 @@
     
     <!-- Title Screen -->
     <div id="screen-intro" class="screen active">
+        <!-- Canadian Flags in the Corners -->
+        <div class="corner-flag flag-tl">
+            <svg viewBox="0 0 60 30" width="100%" height="100%">
+                <rect width="60" height="30" fill="#FF0000"/>
+                <rect x="15" width="30" height="30" fill="#FFFFFF"/>
+                <path d="M30 5 l-1.2 3.2 -3.5 -1.2 1.2 4.2 -4.5 -0.5 2.8 3.8 -5.2 2.2 4.2 3.2 -2.2 4.2 4.5 -1.2 0.5 3.8 2.4 -3 2.4 3 0.5 -3.8 4.5 1.2 -2.2 -4.2 4.2 -3.2 -5.2 -2.2 2.8 -3.8 -4.5 0.5 1.2 -4.2 -3.5 1.2 z M28.5 25.5 h3 v3.5 h-3 z" fill="#FF0000"/>
+            </svg>
+        </div>
+        <div class="corner-flag flag-tr">
+            <svg viewBox="0 0 60 30" width="100%" height="100%">
+                <rect width="60" height="30" fill="#FF0000"/>
+                <rect x="15" width="30" height="30" fill="#FFFFFF"/>
+                <path d="M30 5 l-1.2 3.2 -3.5 -1.2 1.2 4.2 -4.5 -0.5 2.8 3.8 -5.2 2.2 4.2 3.2 -2.2 4.2 4.5 -1.2 0.5 3.8 2.4 -3 2.4 3 0.5 -3.8 4.5 1.2 -2.2 -4.2 4.2 -3.2 -5.2 -2.2 2.8 -3.8 -4.5 0.5 1.2 -4.2 -3.5 1.2 z M28.5 25.5 h3 v3.5 h-3 z" fill="#FF0000"/>
+            </svg>
+        </div>
+        <div class="corner-flag flag-bl">
+            <svg viewBox="0 0 60 30" width="100%" height="100%">
+                <rect width="60" height="30" fill="#FF0000"/>
+                <rect x="15" width="30" height="30" fill="#FFFFFF"/>
+                <path d="M30 5 l-1.2 3.2 -3.5 -1.2 1.2 4.2 -4.5 -0.5 2.8 3.8 -5.2 2.2 4.2 3.2 -2.2 4.2 4.5 -1.2 0.5 3.8 2.4 -3 2.4 3 0.5 -3.8 4.5 1.2 -2.2 -4.2 4.2 -3.2 -5.2 -2.2 2.8 -3.8 -4.5 0.5 1.2 -4.2 -3.5 1.2 z M28.5 25.5 h3 v3.5 h-3 z" fill="#FF0000"/>
+            </svg>
+        </div>
+        <div class="corner-flag flag-br">
+            <svg viewBox="0 0 60 30" width="100%" height="100%">
+                <rect width="60" height="30" fill="#FF0000"/>
+                <rect x="15" width="30" height="30" fill="#FFFFFF"/>
+                <path d="M30 5 l-1.2 3.2 -3.5 -1.2 1.2 4.2 -4.5 -0.5 2.8 3.8 -5.2 2.2 4.2 3.2 -2.2 4.2 4.5 -1.2 0.5 3.8 2.4 -3 2.4 3 0.5 -3.8 4.5 1.2 -2.2 -4.2 4.2 -3.2 -5.2 -2.2 2.8 -3.8 -4.5 0.5 1.2 -4.2 -3.5 1.2 z M28.5 25.5 h3 v3.5 h-3 z" fill="#FF0000"/>
+            </svg>
+        </div>
+
         <h1 class="title-logo">WHERE IN CANADA IS<br>MR. COOMER?</h1>
         <p style="font-family: 'Roboto Mono'; font-size: clamp(1rem, 2vw, 1.4rem); color: #cbd5e0; max-width: 80%; line-height: 1.6; margin-bottom: 4vh;">
             The 6th-grade history teacher is lost across the northern border! He's currently sharing the Gospel and handing out math quizzes somewhere in Canada. Track him down!
@@ -185,7 +229,10 @@
 
     <!-- Main Game Stage -->
     <div id="screen-stage" class="screen">
-        <div id="round-info">ROUND <span id="r-num" style="color:white;">1</span>/15 <br> CLUE <span id="q-num" style="color:white;">1</span>/5</div>
+        <div id="round-info">
+            ROUND <span id="r-num" style="color:white;">1</span>/5<br>
+            <span style="font-size:0.8em; color:var(--text-light);">Q: <span id="q-num" style="color:white;">1</span>/5</span>
+        </div>
         <div id="stage-top">
             <div id="clue-board">
                 <div id="interactive-map-container"></div>
@@ -268,8 +315,9 @@
     <!-- Outro Screen -->
     <div id="screen-outro" class="screen">
         <h1 style="color: var(--neon-green); font-size: clamp(2rem, 4vw, 3rem);" id="outro-title">MISSION COMPLETE!</h1>
-        <p id="outro-text" style="width: 80%; line-height: 1.8; font-family: 'Roboto Mono'; font-size: clamp(1rem, 2vw, 1.6rem); background: rgba(0,0,0,0.8); padding: 3vh; border: 2px solid var(--pbs-yellow);"></p>
-        <button class="btn" onclick="location.reload()" style="font-size: 1.5rem; margin-top: 4vh;">PLAY AGAIN</button>
+        <div id="outro-photo" style="display:none; width: 75vw; height: 35vh; max-width: 800px; background-size: cover; background-position: center; border: 6px solid var(--pbs-yellow); border-radius: 8px; margin-bottom: 2vh;"></div>
+        <p id="outro-text" style="width: 80%; line-height: 1.8; font-family: 'Roboto Mono'; font-size: clamp(1rem, 2vw, 1.4rem); background: rgba(0,0,0,0.8); padding: 2vh; border: 2px solid var(--pbs-yellow);"></p>
+        <button class="btn" onclick="location.reload()" style="font-size: 1.5rem; margin-top: 3vh;">PLAY AGAIN</button>
     </div>
 
 </div>
@@ -375,6 +423,7 @@
     }
 
     // Abeka 6th Grade History Test Questions with Canadian Landmarks Background Photos
+    let gameQuestions = [];
     let triviaData = [
         { q: "The water route that supposedly flowed through North America to Asia", a: 0, opts: ["Northwest passageway", "Dempster highway", "St. Lawrence seaway", "Bay of Fundy"], bg: "https://images.unsplash.com/photo-1517935706615-2717049c2253?auto=format&fit=crop&w=1200&q=80" },
         { q: "The oldest business in Canada", a: 1, opts: ["Klondike Gold", "Hudson Bay Company", "New France Trade", "Loyalists Inc."], bg: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80" },
@@ -495,7 +544,10 @@
         scores = { player: 0, bot1: 0, bot2: 0 };
         currentQ = 0;
         
-        shuffleArray(triviaData);
+        let shuffled = [...triviaData];
+        shuffleArray(shuffled);
+        gameQuestions = shuffled.slice(0, 25); // Now pulls 25 questions total (5 rounds x 5 questions)
+
         updateScoreBoard();
         themeAudio.pause(); 
         showScreen('screen-stage');
@@ -509,13 +561,17 @@
     }
 
     function loadQuestion() {
-        if (currentQ >= triviaData.length) { endGame(); return; }
+        if (currentQ >= gameQuestions.length) { endGame(); return; }
         
         gameActive = true;
-        const qData = triviaData[currentQ];
+        const qData = gameQuestions[currentQ];
         
-        document.getElementById('r-num').innerText = Math.floor(currentQ / 5) + 1;
-        document.getElementById('q-num').innerText = (currentQ % 5) + 1;
+        // Calculate and update round / question display
+        const currentRound = Math.floor(currentQ / 5) + 1;
+        const questionInRound = (currentQ % 5) + 1;
+        
+        document.getElementById('r-num').innerText = currentRound;
+        document.getElementById('q-num').innerText = questionInRound;
         
         const clueDisplay = document.getElementById('clue-display');
         const optsContainer = document.getElementById('options-container');
@@ -582,7 +638,7 @@
             clueDisplay.innerHTML = `<span style="color:var(--neon-green)">CORRECT, ${nameStr}!</span>`;
             if (who === 'player') sfxCorrect();
         } else {
-            clueDisplay.innerHTML = `<span style="color:var(--lcd-red)">INCORRECT, ${nameStr}!</span><br><span style="font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:white;">Answer: ${triviaData[currentQ].opts[correct]}</span>`;
+            clueDisplay.innerHTML = `<span style="color:var(--lcd-red)">INCORRECT, ${nameStr}!</span><br><span style="font-size:clamp(0.9rem, 1.5vw, 1.2rem); color:white;">Answer: ${gameQuestions[currentQ].opts[correct]}</span>`;
             if (who === 'player') {
                 sfxWrong();
                 scores.player -= 1; // Player score goes down for incorrect answer!
@@ -593,12 +649,19 @@
         
         updateScoreBoard();
 
-        if (currentQ % 5 === 4 && currentQ !== triviaData.length - 1) {
-            setTimeout(() => triggerTravelCutscene(), 2500);
+        if (currentQ < gameQuestions.length - 1) {
+            // Check if it is the end of a 5-question round
+            if ((currentQ + 1) % 5 === 0) {
+                setTimeout(() => triggerTravelCutscene(), 2500);
+            } else {
+                setTimeout(() => {
+                    currentQ++;
+                    loadQuestion();
+                }, 2500);
+            }
         } else {
             setTimeout(() => {
-                currentQ++;
-                loadQuestion();
+                endGame();
             }, 3000);
         }
     }
@@ -607,7 +670,7 @@
         const overlay = document.getElementById('cutscene-overlay');
         const photo = document.getElementById('bg-photo');
         
-        photo.style.backgroundImage = `url('${triviaData[currentQ].bg}')`;
+        photo.style.backgroundImage = `url('${gameQuestions[currentQ].bg}')`;
         document.getElementById('cutscene-text').innerText = "Look! It's Mr. Coomer, leaving the area! He's telling everyone about his 6th grade history test and sharing the Gospel before catching his next flight!";
         
         const sprite = document.querySelector('.coomer-sprite');
@@ -630,15 +693,20 @@
 
         const outroTitle = document.getElementById('outro-title');
         const outroText = document.getElementById('outro-text');
+        const outroPhoto = document.getElementById('outro-photo');
 
         if (scores.player >= scores.bot1 && scores.player >= scores.bot2) {
             outroTitle.innerText = "MISSION ACCOMPLISHED!";
+            outroTitle.style.color = "var(--neon-green)";
+            outroPhoto.style.display = 'none';
             outroText.innerHTML = `Incredible work, Gumshoe! You outsmarted Lori and Chris. You successfully intercepted Mr. Coomer just as he was grading a batch of math quizzes! He is now safely boarding a flight back to Tennessee. You've brought him home!`;
             sfxAudienceCheer(5); 
         } else {
             outroTitle.innerText = "MISSION FAILED...";
             outroTitle.style.color = "var(--lcd-red)";
-            outroText.innerHTML = `Lori or Chris beat you to the punch! But the good news is Mr. Coomer was found. He finished telling the locals in Canada about Jesus and is heading back to his 6th-grade classroom in Tennessee. Better luck next time!`;
+            outroPhoto.style.display = 'block';
+            outroPhoto.style.backgroundImage = `url('expos_3.jpeg')`;
+            outroText.innerHTML = `Mr. Coomer is stuck in Canada now! He is at an Expos game and now will become Canadian!`;
         }
     }
 </script>
