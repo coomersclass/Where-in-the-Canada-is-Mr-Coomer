@@ -72,13 +72,15 @@
         align-items: center; justify-content: center; padding: 2vh 2vw; box-sizing: border-box;
     }
 
+    /* Fixed map scaling so the full image is visible */
     #interactive-map-container { 
         display: none; width: 100%; height: 28vh; max-height: 250px; margin-bottom: 2vh; 
         border: 4px solid var(--pbs-yellow); border-radius: 5px; 
         background-image: url('image_84b220.jpg');
-        background-size: 140%; 
+        background-size: contain; 
         background-position: center; 
         background-repeat: no-repeat;
+        background-color: #111;
     }
 
     .clue-text { 
@@ -124,7 +126,6 @@
         box-shadow: 0 0 50px rgba(0,0,0,0.9); border-radius: 10px; 
     }
     
-    /* Fixed Coomer Animation Container & Alignment */
     .coomer-sprite { 
         position: absolute; bottom: 0vh; width: 140px; height: 320px; 
         animation: walk-across 5s linear forwards; 
@@ -207,12 +208,11 @@
         </div>
     </div>
 
-    <!-- Cutscene Overlay with Real Location Photos & Fully Framed Coomer Sprite -->
+    <!-- Cutscene Overlay -->
     <div id="cutscene-overlay">
         <h2 style="color:var(--pbs-yellow); font-size: clamp(1.3rem, 2.5vw, 2.2rem); text-shadow: 2px 2px #000; margin-bottom: 1.5vh;">SIGHTING CONFIRMED...</h2>
         <div id="bg-photo">
             <div class="coomer-sprite">
-                <!-- Adjusted viewBox and proportions to eliminate top clipping -->
                 <svg viewBox="0 0 200 380" width="100%" height="100%">
                     <g class="body-group">
                         <g class="arm-back"><path d="M 90 130 L 70 210" stroke="#87cefa" stroke-width="20" stroke-linecap="round"/><circle cx="70" cy="210" r="11" fill="#f1c27d"/></g>
@@ -309,7 +309,6 @@
         noise.start();
     }
 
-    // Complete Trivia & Real Photographic Backgrounds for Locations
     let triviaData = [
         { q: "The water route that supposedly flowed through North America to Asia", a: 0, opts: ["Northwest passageway", "Dempster highway", "St. Lawrence seaway", "Bay of Fundy"], bg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80" },
         { q: "The oldest business in Canada", a: 1, opts: ["Klondike Gold", "Hudson Bay Company", "New France Trade", "Loyalists Inc."], bg: "https://images.unsplash.com/photo-1578593139369-0260406cf6f2?auto=format&fit=crop&w=1200&q=80" },
